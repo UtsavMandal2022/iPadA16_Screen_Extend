@@ -11,7 +11,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         // The monitor shows the browser only while this app is in the foreground,
         // so never let the iPad auto-lock while we are running.
         application.isIdleTimerDisabled = true
-        LegacyExternalDisplay.shared.start()
         return true
     }
 

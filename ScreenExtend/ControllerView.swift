@@ -12,7 +12,6 @@ struct ControllerView: View {
     @State private var previewMode: PreviewMode = .preview
     @State private var forceSpeaker = false
     @State private var showLibrary = false
-    @State private var screenCount = UIScreen.screens.count
     @ObservedObject private var library = LibraryStore.shared
     @FocusState private var urlFocused: Bool
     @FocusState private var typingFocused: Bool
@@ -210,11 +209,8 @@ struct ControllerView: View {
                 Label(monitorLabel, systemImage: "display")
                     .foregroundStyle(.green)
             } else {
-                Label("No monitor detected (iOS reports \(screenCount) screen\(screenCount == 1 ? "" : "s")). Connect HDMI, or use the preview below.",
-                      systemImage: "display.trianglebadge.exclamationmark")
+                Label("No monitor detected. Connect HDMI, or use the preview below.", systemImage: "display.trianglebadge.exclamationmark")
                     .foregroundStyle(.orange)
-                    .onReceive(NotificationCenter.default.publisher(for: UIScreen.didConnectNotification)) { _ in screenCount = UIScreen.screens.count }
-                    .onReceive(NotificationCenter.default.publisher(for: UIScreen.didDisconnectNotification)) { _ in screenCount = UIScreen.screens.count }
                 Picker("", selection: $previewMode) {
                     ForEach(PreviewMode.allCases, id: \.self) { Text($0.rawValue).tag($0) }
                 }

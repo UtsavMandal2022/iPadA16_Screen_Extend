@@ -1,5 +1,7 @@
 import UIKit
 
+/// UIKit entry point. There is no Info.plist in a Playgrounds app package, so the
+/// scene configuration (including the external-display scene) is declared in code here.
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -16,8 +18,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
                      configurationForConnecting connectingSceneSession: UISceneSession,
                      options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         if connectingSceneSession.role == .windowExternalDisplayNonInteractive {
-            return UISceneConfiguration(name: "External", sessionRole: connectingSceneSession.role)
+            let config = UISceneConfiguration(name: "External", sessionRole: connectingSceneSession.role)
+            config.delegateClass = ExternalSceneDelegate.self
+            return config
         }
-        return UISceneConfiguration(name: "Controller", sessionRole: connectingSceneSession.role)
+        let config = UISceneConfiguration(name: "Controller", sessionRole: connectingSceneSession.role)
+        config.delegateClass = ControllerSceneDelegate.self
+        return config
     }
 }
